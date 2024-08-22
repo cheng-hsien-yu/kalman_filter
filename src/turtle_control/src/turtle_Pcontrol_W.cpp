@@ -158,7 +158,7 @@ int main(int argc, char **argv)
 		// Input your goal_point to your controller
 		Positioncontrol(turtle_goal, turtle, turtle_twist, error_distance);
 
-		if (error_distance < 0.01) {
+		if (error_distance < 0.1) {
         	// Move to the next waypoint
         	waypoint_index = (waypoint_index + 1) % waypoints.size();
         	turtle_goal = waypoints[waypoint_index];

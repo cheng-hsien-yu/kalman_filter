@@ -9,13 +9,13 @@ ros::Subscriber noisy_pose_sub;
 ros::Subscriber noisy_cmd_sub;
 ros::Subscriber true_pose_sub;
 
-KalmanFilter kf(3, 2, 2);  // x = [x, y, theta] | z = [x, y] | u = [linear_vel, angular_vel]
+KalmanFilter kf(3, 3, 2);  // x = [x, y, theta] | z = [x, y, thera] | u = [linear_vel, angular_vel]
 Eigen::VectorXd x(3);       // State vector
 Eigen::MatrixXd A(3, 3);    // State transition matrix
 Eigen::MatrixXd B(3, 2);    // Control matrix
-Eigen::MatrixXd H(2, 3);    // Measurement matrix
+Eigen::MatrixXd H(3, 3);    // Measurement matrix
 Eigen::MatrixXd Q(3, 3);    // Process noise covariance
-Eigen::MatrixXd R(2, 2);    // Measurement noise covariance
+Eigen::MatrixXd R(3, 3);    // Measurement noise covariance
 Eigen::MatrixXd P(3, 3);    // Estimate covariance
 
 bool use_true_measurement = false;
@@ -31,14 +31,16 @@ void initializeKalmanFilter() {
          0, 0;
 
     H << 1, 0, 0,
-         0, 1, 0;
+         0, 1, 0,
+         0, 0, 1;
 
     Q << 0.01, 0, 0,
          0, 0.01, 0,
          0, 0, 0.01;
 
-    R << 0.25, 0,
-         0, 0.25;
+    R << 0.25, 0, 0,
+         0, 0.25, 0,
+         0, 0, 0.25;
 
     P << 1, 0, 0,
          0, 1, 0,
@@ -50,14 +52,14 @@ void initializeKalmanFilter() {
 
 void noisyPoseCallback(const turtlesim::Pose::ConstPtr& msg) {
     if (!use_true_measurement) {
-        Eigen::VectorXd z_meas(2);
-        z_meas << msg->x, msg->y;
+        Eigen::VectorXd z_meas(3);
+        z_meas << msg->x, msg->y, msg->theta;
         kf.update(H, z_meas);
     }
 }
 
 void noisyCmdVelCallback(const geometry_msgs::Twist::ConstPtr& msg) {
-    double dt = 0.1;  // 設置時間步長（根據實際情況調整）
+    double dt = 0.1;  // 設z_meas置時間步長（根據實際情況調整）
     Eigen::VectorXd u(2);
     u << msg->linear.x, msg->angular.z;
 
@@ -80,8 +82,8 @@ void noisyCmdVelCallback(const geometry_msgs::Twist::ConstPtr& msg) {
 void truePoseCallback(const turtlesim::Pose::ConstPtr& msg) {
     if (use_true_measurement) {
         // 重新初始化 Kalman 濾波器
-        Eigen::VectorXd z_meas(2);
-        z_meas << msg->x, msg->y;
+        Eigen::VectorXd z_meas(3);
+        z_meas << msg->x, msg->y, msg->theta;
 
         // 使用真實狀態值重新初始化狀態向量
         x << msg->x, msg->y, msg->theta;
@@ -108,7 +110,7 @@ int main(int argc, char** argv) {
 
     initializeKalmanFilter();
 
-    ros::Timer timer = nh.createTimer(ros::Duration(10.0), [](const ros::TimerEvent&) {
+    ros::Timer timer = nh.createTimer(ros::Duration(60.0), [](const ros::TimerEvent&) {
         use_true_measurement = true;  // 開啟真實位置測量
         ros::Duration(0.1).sleep();   // 暫停0.1秒，模擬瞬間量測
         use_true_measurement = false; // 量測完成後關閉真實位置測量
