@@ -7,4 +7,5 @@
 # new environment variables
 
 # modified environment variables
-export PWD='/home/hsien/NCRL/filter_pratice/build'
+export PWD='/home/hsien/NCRL/kalman_filter/build'
+export ROS_PACKAGE_PATH='/home/hsien/NCRL/kalman_filter/src:/home/hsien/2024_AprilTag_Localization/src:/opt/ros/noetic/share'

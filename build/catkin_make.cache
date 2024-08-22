@@ -1,2 +1,2 @@
-kalman_filter:turtlesim_control
--DCATKIN_DEVEL_PREFIX=/home/hsien/NCRL/filter_pratice/devel -DCMAKE_INSTALL_PREFIX=/home/hsien/NCRL/filter_pratice/install -G Unix Makefiles
+kalman_filter:turtle_control
+-DCATKIN_DEVEL_PREFIX=/home/hsien/NCRL/kalman_filter/devel -DCMAKE_INSTALL_PREFIX=/home/hsien/NCRL/kalman_filter/install -G Unix Makefiles

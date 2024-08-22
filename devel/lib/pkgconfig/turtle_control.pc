@@ -1,0 +1,8 @@
+prefix=/home/hsien/NCRL/kalman_filter/devel
+
+Name: turtle_control
+Description: Description of turtle_control
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

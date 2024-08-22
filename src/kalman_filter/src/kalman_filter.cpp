@@ -62,3 +62,7 @@ void KalmanFilter::update(Eigen::MatrixXd &H_, Eigen::VectorXd z_meas)
 	Eigen::MatrixXd I = Eigen::MatrixXd::Identity(stateSize, stateSize);
 	P = (I - K * H) * P;
 }
+
+Eigen::VectorXd KalmanFilter::getState() {
+        return x;
+    }

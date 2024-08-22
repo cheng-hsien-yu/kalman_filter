@@ -23,6 +23,7 @@ public:
 	void init(Eigen::VectorXd &x_, Eigen::MatrixXd &P_, Eigen::MatrixXd &R_, Eigen::MatrixXd &Q_);
 	Eigen::VectorXd predict(Eigen::MatrixXd &A_, Eigen::MatrixXd &B_, Eigen::VectorXd &u_);
 	void update(Eigen::MatrixXd &H_, Eigen::VectorXd z_meas);
+	Eigen::VectorXd getState();
 };
 
 # endif

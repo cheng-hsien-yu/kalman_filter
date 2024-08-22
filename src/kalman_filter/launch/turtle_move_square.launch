@@ -1,7 +1,0 @@
-<launch>
-    <!-- 啟動 turtle_sim 節點 -->
-    <node pkg="turtlesim" type="turtlesim_node" name="sim"/>
-
-    <!-- 啟動 turtle_square 節點 -->
-    <node pkg="kalman_filter" type="turtle_square.py" name="turtle_square" output="screen"/>
-</launch>

@@ -1,8 +1,8 @@
-prefix=/home/hsien/NCRL/filter_pratice/install
+prefix=/home/hsien/NCRL/kalman_filter/install
 
 Name: kalman_filter
 Description: Description of kalman_filter
 Version: 0.0.0
 Cflags: -I${prefix}/include
 Libs: -L${prefix}/lib -lkalman_filter
-Requires: roscpp geometry_msgs
+Requires: roscpp geometry_msgs turtlesim std_msgs
