@@ -1,0 +1,8 @@
+prefix=/home/hsien/NCRL/filter_pratice/devel
+
+Name: turtlesim_control
+Description: Description of turtlesim_control
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
